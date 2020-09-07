@@ -18,12 +18,18 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private UserMapper userMapper;
 
+    /*
+    * 登陆事务
+    **/
     @Override
     public boolean isUser(String user, String password) {
         User res = userMapper.selectByUser(user);
         return password.equals(res.getPassword());
     }
 
+    /*
+    * 注册事务
+    * */
     @Override
     public boolean addUser(String name,String user, String password) {
         //返回结果值 是否成功

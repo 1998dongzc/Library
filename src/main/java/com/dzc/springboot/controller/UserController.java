@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author: 董政辰
@@ -21,21 +22,21 @@ public class UserController {
 
     //跳转登录页面
     @RequestMapping("/user/login")
-    public String LoginHtml(){
+    public String LoginHtml() {
         return "/login/login";
     }
 
     //跳转注册页面
     @RequestMapping("/user/register")
-    public String RegisterHtml(){
+    public String RegisterHtml() {
         return "/login/register";
     }
 
     //登陆功能
     @RequestMapping("/user/login/do")
-    public String doLogin(Model model,String user,String password){
+    public String doLogin(Model model, String user, String password) {
         boolean res = loginService.isUser(user, password);
-        if(res)
+        if (res)
             return "/book/books";
         else
             return "/login/login";
@@ -43,16 +44,20 @@ public class UserController {
 
     //注册功能
     @RequestMapping("/user/register/do")
-    public String doRegister(Model model,String name,String user,String password){
+    public ModelAndView doRegister(String name, String user, String password) {
+        ModelAndView mv = new ModelAndView();
         //跳转页面的名称
         String htmlName;
-        boolean res = loginService.addUser(name,user, password);
+        boolean res = loginService.addUser(name, user, password);
         //成功向域中添加 操作信息
         if (res)
-            model.addAttribute("mess","注册成功");
-        else
-            model.addAttribute("mess","注册失败");
-        return "/login/login";
+            mv.setViewName("/login/login");
+        else {
+            mv.addObject("mess", "  注册失败");
+            mv.setViewName("/login/register");
+
+        }
+        return mv;
     }
 
 }

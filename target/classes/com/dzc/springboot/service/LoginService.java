@@ -10,5 +10,5 @@ public interface LoginService {
 
     public boolean isUser(String user,String password);
 
-    public boolean addUser(String name,String user, String password);
+    public boolean addUser(String name, String user, String password);
 }

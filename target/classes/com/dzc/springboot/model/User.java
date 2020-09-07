@@ -1,6 +1,16 @@
 package com.dzc.springboot.model;
 
 public class User {
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", user='" + user + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
     private Integer id;
 
     private String name;
