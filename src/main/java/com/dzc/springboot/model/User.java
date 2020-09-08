@@ -1,16 +1,6 @@
 package com.dzc.springboot.model;
 
 public class User {
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", user='" + user + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
-
     private Integer id;
 
     private String name;
@@ -18,6 +8,8 @@ public class User {
     private String user;
 
     private String password;
+
+    private String stuId;
 
     public Integer getId() {
         return id;
@@ -49,5 +41,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getStuId() {
+        return stuId;
+    }
+
+    public void setStuId(String stuId) {
+        this.stuId = stuId;
     }
 }

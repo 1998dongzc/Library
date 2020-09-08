@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dzc.springboot.dao.BorrowMapper">
+  <resultMap id="BaseResultMap" type="com.dzc.springboot.model.Borrow">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="bookid" jdbcType="VARCHAR" property="bookid" />
+    <result column="userid" jdbcType="VARCHAR" property="userid" />
+    <result column="date" jdbcType="VARCHAR" property="date" />
+    <result column="returndate" jdbcType="VARCHAR" property="returndate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, bookid, userid, date, returndate
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from borrow
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from borrow
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dzc.springboot.model.Borrow">
+    insert into borrow (id, bookid, userid, 
+      date, returndate)
+    values (#{id,jdbcType=INTEGER}, #{bookid,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, 
+      #{date,jdbcType=VARCHAR}, #{returndate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dzc.springboot.model.Borrow">
+    insert into borrow
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="bookid != null">
+        bookid,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="returndate != null">
+        returndate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="bookid != null">
+        #{bookid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="returndate != null">
+        #{returndate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dzc.springboot.model.Borrow">
+    update borrow
+    <set>
+      <if test="bookid != null">
+        bookid = #{bookid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="returndate != null">
+        returndate = #{returndate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dzc.springboot.model.Borrow">
+    update borrow
+    set bookid = #{bookid,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=VARCHAR},
+      date = #{date,jdbcType=VARCHAR},
+      returndate = #{returndate,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -45,7 +45,7 @@
                enableDeleteByExample="false"
                enableSelectByExample="false"
                selectByExampleQueryId="false"/>
-        <table tableName="ticket" domainObjectName="Ticket"
+        <table tableName="borrow" domainObjectName="Borrow"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"

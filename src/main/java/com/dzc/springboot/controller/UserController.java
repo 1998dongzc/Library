@@ -1,12 +1,10 @@
 package com.dzc.springboot.controller;
 
-import com.dzc.springboot.model.User;
 import com.dzc.springboot.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author: 董政辰
@@ -20,44 +18,34 @@ public class UserController {
     @Autowired
     private LoginService loginService;
 
-    //跳转登录页面
+    //跳转学生登录页面
     @RequestMapping("/user/login")
     public String LoginHtml() {
         return "/login/login";
     }
 
-    //跳转注册页面
-    @RequestMapping("/user/register")
-    public String RegisterHtml() {
-        return "/login/register";
+    //跳转管理员登陆页面
+    @RequestMapping("/user/rootlogin")
+    public String LoginRoot(){
+        return "/login/rootlogin";
     }
 
-    //登陆功能
+    //学生登录登陆功能
     @RequestMapping("/user/login/do")
     public String doLogin(Model model, String user, String password) {
         boolean res = loginService.isUser(user, password);
-        if (res)
-            return "/book/books";
+        if (res) {
+            System.out.println("登陆成功");
+            return "/index/userindex";
+        }
         else
             return "/login/login";
     }
 
-    //注册功能
-    @RequestMapping("/user/register/do")
-    public ModelAndView doRegister(String name, String user, String password) {
-        ModelAndView mv = new ModelAndView();
-        //跳转页面的名称
-        String htmlName;
-        boolean res = loginService.addUser(name, user, password);
-        //成功向域中添加 操作信息
-        if (res)
-            mv.setViewName("/login/login");
-        else {
-            mv.addObject("mess", "  注册失败");
-            mv.setViewName("/login/register");
-
-        }
-        return mv;
+    //管理员登陆功能
+    @RequestMapping("/user/login/root")
+    public String doLoginRoot(){
+        return "/index/rootindex.html";
     }
 
 }

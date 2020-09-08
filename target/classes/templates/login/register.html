@@ -13,7 +13,7 @@
 <form action="/user/register/do" method="post">
 	<p>昵称： <input type="text" name="name" /></p>
 	<p>账号： <input type="text" name="user" /></p>
-	<p>密码： <input type="text" name="password" /></p>
+	<p>密码： <input type="password" name="password" /></p>
 	<input id="bt" type="submit" value="注册" />
 	<span style="color:red;font-size: 20px" th:text="${mess}"></span><br>
 	<a th:href="@{/user/login}">返回登录页面</a>
