@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * @author: 董政辰
- * @date: 2020/9/7 8:47
+ * @date: 2020/9/7 14:56
  * @description:
  * @email：532587041@qq.com
  */
@@ -23,33 +23,32 @@ public class LoginServiceImpl implements LoginService {
     **/
     @Override
     public boolean isUser(String user, String password) {
-        User res = userMapper.selectByUser(user);
-        return password.equals(res.getPassword());
+        User u = userMapper.selectByUser(user);
+        return password.equals(u.getPassword());
     }
 
     /*
     * 注册事务
     * */
     @Override
-    public boolean addUser(String name,String user, String password) {
-        //返回结果值 是否成功
-        boolean result=false;
-        boolean res = isUser(user, password);
-        //如果存在用户 则注册失败
-        if (res)
-            result=false;
-        else {
-            User u=new User();
-            u.setUser(name);
-            u.setUser(user);
-            u.setPassword(password);
-            //如果返回的int值(影响的数据行值)不为1 则插入失败
-
-            int i = userMapper.insert(u);
-            if(i==0)
-                result=false;
-            result=true;
+    public boolean addUser(String name, String user, String password) {
+        boolean res=false;
+        User u = userMapper.selectByUser(user);
+        //查询是已存在此账号
+        if(u!=null)
+            res=false;
+        else{
+            //不存在此账号可以添加
+            User one=new User();
+            one.setName(name);
+            one.setUser(user);
+            one.setPassword(password);
+            int insert = userMapper.insert(one);
+            //影响数据行数不为1则增加失败
+            if (insert!=1)
+                res=false;
+            else res=true;
         }
-        return result;
+        return res;
     }
 }
