@@ -11,6 +11,10 @@ public class Book {
 
     private Integer status;
 
+    private String room;
+
+    private String num;
+
     public Integer getId() {
         return id;
     }
@@ -49,5 +53,34 @@ public class Book {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getRoom() {
+        return room;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
+    }
+
+    public String getNum() {
+        return num;
+    }
+
+    public void setNum(String num) {
+        this.num = num;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", author='" + author + '\'' +
+                ", price='" + price + '\'' +
+                ", status=" + status +
+                ", room='" + room + '\'' +
+                ", num='" + num + '\'' +
+                '}';
     }
 }

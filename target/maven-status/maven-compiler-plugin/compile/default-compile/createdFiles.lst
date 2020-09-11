@@ -1,0 +1,13 @@
+com\dzc\springboot\dao\UserMapper.class
+com\dzc\springboot\service\book\Impl\BookServiceImpl.class
+com\dzc\springboot\service\book\BookService.class
+com\dzc\springboot\model\Borrow.class
+com\dzc\springboot\dao\BookMapper.class
+com\dzc\springboot\service\login\Impl\LoginServiceImpl.class
+com\dzc\springboot\model\Book.class
+com\dzc\springboot\service\login\LoginService.class
+com\dzc\springboot\BookManagerApplication.class
+com\dzc\springboot\model\User.class
+com\dzc\springboot\controller\UserController.class
+com\dzc\springboot\dao\BorrowMapper.class
+com\dzc\springboot\controller\BookController.class

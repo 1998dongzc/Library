@@ -2,17 +2,18 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>首页</title>
 </head>
 <body>
 <h1 style="text-align: center">图书馆管理系统</h1>
 <hr>
-姓名: <span th:text="${stu.name}">xxx</span> <br>
-学号: <span th:text="${stu.id}">xxxxxx</span>
+姓名: <span th:text="管理员">xxx</span> <br>
 <hr>
-<button th:href="@{/book/books}">查询书籍</button>
-<button>信息修改</button>
-<button>借书情况</button>
-<button>退出登录</button>
+<button>查询书籍</button>
+<button>书籍管理</button>
+<button>学生管理</button>
+<button>书籍信息修改</button>
+<button>查看借记记录</button>
+<a th:href="@{/user/login/out}"><button>退出登录</button></a>
 </body>
 </html>

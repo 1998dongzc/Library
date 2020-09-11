@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>学生信息修改</title>
+</head>
+<body>
+<form method="post" th:action="@{/user/modify/do}" >
+    姓&emsp;&emsp;名:<input type="text" th:value="${user.name}" readonly="readonly" /><br>
+    学&emsp;&emsp;号:<input type="text" th:value="${user.stuId}" readonly="readonly" /><br>
+    账&emsp;&emsp;号:<input type="text" th:value="${user.user}" name="username" readonly="readonly" /><br>
+    密&emsp;&emsp;码:<input type="password" name="password" /><br>
+    重复密码:<input type="password" name="password2"/><br>
+    <input type="submit" value="修改">
+    <input type="reset" value="重置">
+</form>
+</body>
+</html>
