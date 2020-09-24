@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"6>
+<head>
+    <meta charset="UTF-8">
+    <title>修改书籍</title>
+</head>
+<body>
+<div align="center">
+    <h2>书籍修改页面</h2>
+    <hr>
+    <form th:action="@{/book/update/do}">
+        <input th:value="${book.id}" name="id" hidden="hidden">
+        书名<input type="text" th:value="${book.name}" name="name"><br>
+        作者<input type="text" th:value="${book.author}" name="author"><br>
+        价格<input type="text" th:value="${book.price}" name="price"><br>
+        数量<input type="text" th:value="${book.status}" name="status"><br>
+        阅读室<select  name="room">
+        <option th:text="${book.room}"></option>
+        <option>1-1</option>
+        <option>1-2</option>
+        <option>1-3</option>
+        <option>1-4</option>
+    </select><br>
+        编号<input type="text" th:value="${book.num}" name="num"><br>
+        <input type="submit" value="修改" >
+    </form>
+    <div th:inline="text">
+        <span th:text="${mess}"></span>
+    </div>
+</div>
+</body>
+</html>

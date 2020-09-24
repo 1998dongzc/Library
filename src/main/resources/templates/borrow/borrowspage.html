@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>个人借记情况</title>
+</head>
+<body>
+<div align="center">
+    <h2>个人借书情况</h2>
+    <hr>
+    <table border="1" cellpadding="10" style="text-align: center">
+        <tr>
+            <th width="100px">书名</th>
+            <th width="80px">阅览室</th>
+            <th width="80px">编号</th>
+            <th width="150px">借书日期</th>
+            <th width="150px">归还日期</th>
+            <th width="80px">状态</th>
+        </tr>
+        <tr th:each="one:${list}">
+            <td th:text="'《'+${one.bname}+'》'"></td>
+            <td th:text="${one.broom}"></td>
+            <td th:text="${one.bnum}"></td>
+            <td th:text="${one.stime}"></td>
+            <td th:text="${one.rtime}"></td>
+            <td th:text="${one.status}"></td>
+        </tr>
+    </table>
+    <br>
+    <span style="color:#0e4;font-size: 30px">Tip:还书请到管理员窗口归还</span>
+    <br>
+    <a th:href="@{/user/index/stu}"><button>返回首页</button></a>
+</div>
+</body>
+</html>

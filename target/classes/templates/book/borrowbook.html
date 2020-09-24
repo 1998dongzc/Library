@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>借书确认页面</title>
+    <style>
+        .tip {
+            color: darkolivegreen;
+            font-size: 20px;
+            border: gold;
+        }
+    </style>
+</head>
+<body>
+<div align="center">
+    <h2>书籍借记界面</h2>
+    <hr>
+    <h3>请确定借记书籍信息</h3>
+    <table border="3px" style="text-align: center">
+        <tr>
+            <th width="100px">ID</th>
+            <th width="180px">书名</th>
+            <th width="100px">作者</th>
+            <th width="100px">编号</th>
+            <th width="140px">阅读室</th>
+        </tr>
+        <tr>
+
+            <td th:text="${book.id}"></td>
+            <td th:text="${book.name}"></td>
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.num}"></td>
+            <td th:text="${book.room}"></td>
+        </tr>
+    </table>
+    <br>
+    <a th:href="@{/book/querypage}"><button>重新选择</button></a>
+    &emsp;&emsp;
+    <a th:href="@{/user/index/stu}"><button>返回首页</button></a>
+    <br>
+    <form th:action="@{/book/borrow/do}" method="post">
+        <input th:value="${book.id}" name="id" hidden="hidden">
+
+        <span class="tip">请选择借记的天数</span><br>
+
+        期限:<select name="date">
+        <option>15</option>
+        <option>30</option>
+        </select>天<br><br>
+
+        <span class="tip">请输入密码</span><br>
+        确认密码:<input type="password" name="password">
+        <input type="submit" value="确定"><br>
+
+        <span style="color: red" th:text="${pswd}"></span>
+
+    </form>
+    <br>
+    <br>
+    <span style="color: green;font-size: 30px" th:text="${mess}"></span>
+</div>
+</form>
+</body>
+</html>
