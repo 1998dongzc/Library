@@ -10,9 +10,9 @@
 姓名: <span th:text="${user.name}">xxx</span> <br>
 学号: <span th:text="${user.stuId}">xxxxxx</span>
 <hr>
-<a th:href="@{/book/query}"><button>查询书籍</button></a>
+<a th:href="@{/book/querypage}"><button>查询书籍</button></a>
 <a th:href="@{/user/modify}"><button>信息修改</button></a>
-<button>借书情况</button>
+<a th:href="@{/borrow/display}"><button>借书情况</button></a>
 <a th:href="@{/user/login/out}"><button>退出登录</button></a>
 </body>
 </html>

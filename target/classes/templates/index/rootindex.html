@@ -9,10 +9,9 @@
 <hr>
 姓名: <span th:text="管理员">xxx</span> <br>
 <hr>
-<button>查询书籍</button>
-<button>书籍管理</button>
+<a th:href="@{/book/querypage}"><button>查询书籍</button></a>
+<a th:href="@{/root/curd}"><button>书籍管理</button></a>
 <button>学生管理</button>
-<button>书籍信息修改</button>
 <button>查看借记记录</button>
 <a th:href="@{/user/login/out}"><button>退出登录</button></a>
 </body>

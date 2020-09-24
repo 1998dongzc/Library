@@ -1,6 +1,7 @@
 package com.dzc.springboot.service.book;
 
 import com.dzc.springboot.model.Book;
+import com.dzc.springboot.model.User;
 
 import java.util.List;
 
@@ -12,6 +13,23 @@ import java.util.List;
  */
 public interface BookService {
 
-    List<Book> queryAllBooks();
+    List<Book> queryAllBooks(Integer pageno);
+
+    Integer queryCount();
+
+    List<Book> querySomeBooks(String bookname, String bookauthor, String bookroom,Integer pageno);
+
+    Integer querySomeBooksCount(String bookname, String bookauthor, String bookroom,Integer pageno);
+
+    boolean addBook(String name, String author, String price, Integer status, String room, String num);
+
+    List<Book> getSomeBooks(String bookname,String bookauthor,String bookroom);
+
+    boolean doDeleteById(Integer id);
+
+    Book seletOneBookById(Integer id);
+
+    int updateOnBook(Book book);
 
 }
+

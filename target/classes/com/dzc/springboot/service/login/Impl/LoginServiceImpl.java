@@ -37,6 +37,7 @@ public class LoginServiceImpl implements LoginService {
      * 添加用户
      * */
     @Override
+    @Transactional
     public boolean addUser(String name, String user, String password) {
         boolean res = false;
         User u = userMapper.selectByUser(user);

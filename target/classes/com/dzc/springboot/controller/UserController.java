@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
  * @email：532587041@qq.com
  */
 @Controller
+@RequestMapping("/user")
 public class UserController {
 
 
@@ -23,19 +24,35 @@ public class UserController {
     private LoginService loginService;
 
     //跳转学生登录页面
-    @RequestMapping("/user/login")
+    @RequestMapping("/login")
     public String LoginHtml() {
         return "/login/login";
     }
 
     //跳转管理员登陆页面
-    @RequestMapping("/user/rootlogin")
+    @RequestMapping("/rootlogin")
     public String LoginRoot() {
         return "/login/rootlogin";
     }
 
+    //跳转学生功能首页
+    @RequestMapping("/index/stu")
+    public String stuIndex(Model model,HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("user");
+        model.addAttribute("user",user);
+        return "/index/userindex";
+    }
+
+    //跳转管理员功能首页
+    @RequestMapping("/index/root")
+    public String rootIndex(Model model,HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("user");
+        model.addAttribute("user",user);
+        return "/index/rootindex";
+    }
+
     //跳转信息修改页面
-    @RequestMapping("/user/modify")
+    @RequestMapping("/modify")
     public String userModifyHtml(HttpServletRequest request, Model model) {
         User user = (User) request.getSession().getAttribute("user");
         model.addAttribute("user", user);
@@ -43,7 +60,7 @@ public class UserController {
     }
 
     //学生登录登陆功能
-    @RequestMapping("/user/login/do")
+    @RequestMapping("/login/do")
     public String doLogin(HttpServletRequest request, Model model, String user, String password) {
         boolean res = loginService.isUser(user, password);
         User currentUser = loginService.getUser(user);
@@ -58,7 +75,7 @@ public class UserController {
     }
 
     //管理员登陆功能
-    @RequestMapping("/user/login/root")
+    @RequestMapping("/login/root")
     public String doLoginRoot(HttpServletRequest request, Model model, String user, String password) {
         boolean res = loginService.isRootUser(user, password);
         if (res) {
@@ -75,15 +92,20 @@ public class UserController {
     }
 
     //修改学生账号
-    @RequestMapping("/user/modify/do")
+    @RequestMapping("/modify/do")
     public String ModifyUserDo(HttpServletRequest request,Model model,String username, String password) {
         int i = loginService.updateInfor(username, password);
-        System.out.println("修改了"+i+"行数据");
-        return "/user/login";
+        User user = (User) request.getSession().getAttribute("user");
+        model.addAttribute("user",user);
+        if (i>0)
+            model.addAttribute("mess","修改账号密码成功");
+        else
+            model.addAttribute("mess","修改账号密码失败");
+        return "/infor/userModify";
     }
 
     //退出登录功能 学生管理员通用
-    @RequestMapping("/user/login/out")
+    @RequestMapping("/login/out")
     public String doLogout(HttpServletRequest request) {
         request.getSession().removeAttribute("user");
         return "/login/login";

@@ -3,9 +3,9 @@ package com.dzc.springboot.model;
 public class Borrow {
     private Integer id;
 
-    private String bookid;
+    private Integer bookid;
 
-    private String userid;
+    private Integer userid;
 
     private String date;
 
@@ -19,19 +19,19 @@ public class Borrow {
         this.id = id;
     }
 
-    public String getBookid() {
+    public Integer getBookid() {
         return bookid;
     }
 
-    public void setBookid(String bookid) {
+    public void setBookid(Integer bookid) {
         this.bookid = bookid;
     }
 
-    public String getUserid() {
+    public Integer getUserid() {
         return userid;
     }
 
-    public void setUserid(String userid) {
+    public void setUserid(Integer userid) {
         this.userid = userid;
     }
 

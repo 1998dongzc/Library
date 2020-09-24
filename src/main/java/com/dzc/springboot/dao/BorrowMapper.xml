@@ -3,8 +3,8 @@
 <mapper namespace="com.dzc.springboot.dao.BorrowMapper">
   <resultMap id="BaseResultMap" type="com.dzc.springboot.model.Borrow">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="bookid" jdbcType="VARCHAR" property="bookid" />
-    <result column="userid" jdbcType="VARCHAR" property="userid" />
+    <result column="bookid" jdbcType="INTEGER" property="bookid" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
     <result column="date" jdbcType="VARCHAR" property="date" />
     <result column="returndate" jdbcType="VARCHAR" property="returndate" />
   </resultMap>
@@ -24,7 +24,7 @@
   <insert id="insert" parameterType="com.dzc.springboot.model.Borrow">
     insert into borrow (id, bookid, userid, 
       date, returndate)
-    values (#{id,jdbcType=INTEGER}, #{bookid,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{bookid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
       #{date,jdbcType=VARCHAR}, #{returndate,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.dzc.springboot.model.Borrow">
@@ -51,10 +51,10 @@
         #{id,jdbcType=INTEGER},
       </if>
       <if test="bookid != null">
-        #{bookid,jdbcType=VARCHAR},
+        #{bookid,jdbcType=INTEGER},
       </if>
       <if test="userid != null">
-        #{userid,jdbcType=VARCHAR},
+        #{userid,jdbcType=INTEGER},
       </if>
       <if test="date != null">
         #{date,jdbcType=VARCHAR},
@@ -68,10 +68,10 @@
     update borrow
     <set>
       <if test="bookid != null">
-        bookid = #{bookid,jdbcType=VARCHAR},
+        bookid = #{bookid,jdbcType=INTEGER},
       </if>
       <if test="userid != null">
-        userid = #{userid,jdbcType=VARCHAR},
+        userid = #{userid,jdbcType=INTEGER},
       </if>
       <if test="date != null">
         date = #{date,jdbcType=VARCHAR},
@@ -84,10 +84,18 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.dzc.springboot.model.Borrow">
     update borrow
-    set bookid = #{bookid,jdbcType=VARCHAR},
-      userid = #{userid,jdbcType=VARCHAR},
+    set bookid = #{bookid,jdbcType=INTEGER},
+      userid = #{userid,jdbcType=INTEGER},
       date = #{date,jdbcType=VARCHAR},
       returndate = #{returndate,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectAllByUserId" resultType="com.dzc.springboot.model.Borrow">
+    select id,bookid,userid,date,returndate from borrow where userid=#{userid};
+  </select>
+
+  <select id="borrowCountByUserID" resultType="java.lang.Integer">
+    select count(*) from borrow where userid=${userid}
+  </select>
 </mapper>

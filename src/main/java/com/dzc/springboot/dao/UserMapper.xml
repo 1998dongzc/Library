@@ -91,7 +91,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByUser" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select name,user,password,stu_id from user where user=#{user}
+    select id,name,user,password,stu_id from user where user=#{user}
   </select>
   <update id="updateByUser" parameterType="com.dzc.springboot.model.User">
     update user set password=#{password} where user=#{user}
