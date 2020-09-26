@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        h2 {
+            color: green;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .tb {
+            text-align: center;
+            border: 4px solid black;
+            cellpadding: 10;
+            cellspacing: 1;
+        }
+
+        tr:hover {
+            background: #00ee44;
+        }
+
+        td:hover {
+            background: orange;
+        }
+
+        button {
+
+        }
+    </style>
+<body>
+<div align="center">
+    <h2 style="color: green">查看学生页面</h2>
+    <hr>
+    <table class="tb">
+        <tr>
+            <th width="110px">序号</th>
+            <th width="110px">学号</th>
+            <th width="110px">姓名</th>
+            <th width="110px">账号</th>
+            <th width="150px">借书数量(本)</th>
+        </tr>
+        <tr th:each="one:${list}" >
+            <td th:text="${one.id}"></td>
+            <td th:text="${one.stuId}"></td>
+            <td th:text="${one.name}"></td>
+            <td th:text="${one.user}"></td>
+            <td th:text="${one.booknum}+'本'"></td>
+        </tr>
+    </table>
+    <hr>
+    <!--显示当前页面数 和共页面数-->
+    <span th:text="'共'+${count}+'页'"></span>
+    &emsp;
+    <span th:text="'当前第'+${pageno}+'页'"></span>&emsp;
+    <a th:href="@{/root/stucurd/query(pageno=1)}">
+        <button>首页</button>
+    </a>
+    <a th:href="@{/root/stucurd/query(pageno=${pageno}-1)}">
+        <button th:disabled="${pageno eq 1?'true':'false'}">上一页</button>
+    </a>
+    <a th:href="@{/root/stucurd/query(pageno=${pageno}+1)}">
+        <button th:disabled="${pageno eq count?'true':'false'}">下一页</button>
+    </a>
+    <a th:href="@{/root/stucurd/query(pageno=${count})}">
+        <button>尾页</button>
+    </a>
+</div>
+</body>
+</html>

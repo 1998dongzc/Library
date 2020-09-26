@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * @author: 董政辰
  * @date: 2020/9/7 14:56
@@ -38,25 +40,25 @@ public class LoginServiceImpl implements LoginService {
      * */
     @Override
     @Transactional
-    public boolean addUser(String name, String user, String password) {
-        boolean res = false;
+    public String  addUser(String name, String user, String password,String stuid) {
         User u = userMapper.selectByUser(user);
         //查询是已存在此账号
         if (u != null)
-            res = false;
+            return "isuser";
         else {
             //不存在此账号可以添加
             User one = new User();
             one.setName(name);
             one.setUser(user);
             one.setPassword(password);
-            int insert = userMapper.insert(one);
+            one.setStuId(stuid);
+            int insert = userMapper.insertSelective(one);
             //影响数据行数不为1则增加失败
-            if (insert != 1)
-                res = false;
-            else res = true;
+            if (insert == 1)
+                return "success";
+            else
+                return "wrong";
         }
-        return res;
     }
 
     @Override
@@ -95,4 +97,33 @@ public class LoginServiceImpl implements LoginService {
         int i = userMapper.updateByUser(one);
         return i;
     }
+
+    @Override
+    public List<User> getAllUser(Integer pageno) {
+        List<User> users = userMapper.selectAll(pageno);
+        return users;
+    }
+
+    @Override
+    public List<User> getAllUserById(String stuid) {
+        List<User> users = userMapper.selectAllById(stuid);
+        return users;
+    }
+
+    @Override
+    public int getCountByStuId(String stuid) {
+        int allCountByID = userMapper.getAllCountByID(stuid);
+        return allCountByID;
+    }
+
+    @Override
+    @Transactional
+    public boolean delUser(Integer id) {
+        int i = userMapper.deleteByPrimaryKey(id);
+        if(i==1)
+            return true;
+        else return false;
+    }
+
+
 }

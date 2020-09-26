@@ -98,4 +98,15 @@
   <select id="borrowCountByUserID" resultType="java.lang.Integer">
     select count(*) from borrow where userid=${userid}
   </select>
+
+  <select id="selectAllBorrow" parameterType="java.lang.Integer" resultType="com.dzc.springboot.model.Borrow">
+    select
+    <include refid="Base_Column_List"/>
+    from borrow
+    limit ${((pageno-1)*10)},10;
+  </select>
+
+  <select id="getBorrowCount" resultType="java.lang.Integer">
+    select count(*) from borrow;
+  </select>
 </mapper>

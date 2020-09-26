@@ -1,0 +1,25 @@
+ul{
+    margin:0;
+    padding:0;
+    overflow:hidden;
+}
+li{
+    text-align: center;
+    display: inline;
+    width: 25%;
+    height: 35px;
+    float: left;
+}
+a:link,a:visited {
+    text-decoration: none;
+    height: 100%;
+    display: block;
+    font-weight:bold;
+    color:#FFFFFF;
+    background-color:#3e434e;
+    padding:4px;
+}
+a:hover,a:active{
+    background:#acb3c2;
+    color: black;
+}

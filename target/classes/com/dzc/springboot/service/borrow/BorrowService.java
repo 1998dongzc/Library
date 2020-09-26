@@ -18,4 +18,10 @@ public interface BorrowService {
     String borrowOneBook(User user, Integer id, Integer day, String password);
 
     List<MixBorrow> getUserBorrows(Integer id) throws ParseException;
+
+    List<MixBorrow> getAllBorrows(Integer pageno) throws ParseException;
+
+    Integer getCountBorrow();
+
+    boolean returnBook(Integer id);
 }

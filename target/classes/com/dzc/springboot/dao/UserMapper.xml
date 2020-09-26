@@ -96,4 +96,16 @@
   <update id="updateByUser" parameterType="com.dzc.springboot.model.User">
     update user set password=#{password} where user=#{user}
   </update>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select id,name,user,stu_id from user limit ${((pageno-1)*10)},10;
+  </select>
+  <select id="getAllCount" resultType="java.lang.Integer">
+    select count(*) from user;
+  </select>
+  <select id="selectAllById" resultMap="BaseResultMap" >
+    select id,name,user,stu_id from user where stu_id like concat('%',#{stuId},'%');
+  </select>
+  <select id="getAllCountByID"  resultType="java.lang.Integer">
+    select count(*) from user where stu_id like concat('%',#{stuId},'%') ;
+  </select>
 </mapper>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>删除学生</title>
+    <script th:src="@{/js/jquery-3.5.1.min.js}"></script>
+    <script th:inline="javascript">
+        $(function () {
+            $(".bt").click(function () {
+                var bt=$(this);
+                $.ajax({
+                    type: "post",
+                    url: [[@{/root/stucurd/del/do}]],
+                    data:{"id": $(this).val()},
+                    async:false,
+                    success: function (data) {
+                    if (data) {
+                        bt.attr("disabled", true);
+                        bt.text("已删除");
+                        alert("删除成功");
+                    } else
+                        alert("删除失败");
+                }
+            })
+            })
+        })
+    </script>
+    <style>
+        h2 {
+            color: green;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .tb {
+            text-align: center;
+            border: 4px solid black;
+            cellpadding: 10;
+            cellspacing: 1;
+        }
+
+        tr:hover {
+            background: #00ee44;
+        }
+
+        td:hover {
+            background: orange;
+        }
+
+        button {
+
+        }
+    </style>
+</head>
+<body>
+
+<div align="center">
+    <h2>删除学生页面</h2>
+    <form th:action="@{/root/stucurd/del/query}" method="post">
+        学&emsp;号:<input type="text" name="stuid">&emsp;
+        <input value="查询" type="submit">
+    </form>
+    <table class="tb">
+        <tr>
+            <th width="110px">序号</th>
+            <th width="110px">学号</th>
+            <th width="110px">姓名</th>
+            <th width="110px">账号</th>
+            <th width="110px">操作</th>
+        </tr>
+        <tr th:each="one:${list}">
+            <td th:text="${one.id}"></td>
+            <td th:text="${one.stuId}"></td>
+            <td th:text="${one.name}"></td>
+            <td th:text="${one.user}"></td>
+            <td>
+                <button th:value="${one.id}" class="bt">删除</button>
+            </td>
+        </tr>
+    </table>
+    <hr>
+    <!--显示当前页面数 和共页面数-->
+    <span th:text="'共'+${count}+'页'"></span>
+    &emsp;
+    <span th:text="'当前第'+${pageno}+'页'"></span>&emsp;
+    <a th:href="@{/root/stucurd/del(pageno=1)}">
+        <button>首页</button>
+    </a>
+    <a th:href="@{/root/stucurd/del(pageno=${pageno}-1)}">
+        <button th:disabled="${pageno eq 1?'true':'false'}">上一页</button>
+    </a>
+    <a th:href="@{/root/stucurd/del(pageno=${pageno}+1)}">
+        <button th:disabled="${pageno eq count?'true':'false'}">下一页</button>
+    </a>
+    <a th:href="@{/root/stucurd/del(pageno=${count})}">
+        <button>尾页</button>
+    </a>
+</div>
+
+</body>
+</html>

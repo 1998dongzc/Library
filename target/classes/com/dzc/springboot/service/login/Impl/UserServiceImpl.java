@@ -1,12 +1,20 @@
 
 package com.dzc.springboot.service.login.Impl;
 
+import com.dzc.springboot.dao.BorrowMapper;
 import com.dzc.springboot.dao.UserMapper;
+import com.dzc.springboot.model.Borrow;
 import com.dzc.springboot.model.User;
-import com.dzc.springboot.service.login.LoginService;
+import com.dzc.springboot.model.UserAndBooknum;
+import com.dzc.springboot.service.login.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author: 董政辰
@@ -15,10 +23,13 @@ import org.springframework.transaction.annotation.Transactional;
  * @email：532587041@qq.com
  */
 @Service
-public class LoginServiceImpl implements LoginService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private BorrowMapper borrowMapper;
 
     /*
      * 学生登录事务
@@ -38,25 +49,25 @@ public class LoginServiceImpl implements LoginService {
      * */
     @Override
     @Transactional
-    public boolean addUser(String name, String user, String password) {
-        boolean res = false;
+    public String  addUser(String name, String user, String password,String stuid) {
         User u = userMapper.selectByUser(user);
         //查询是已存在此账号
         if (u != null)
-            res = false;
+            return "isuser";
         else {
             //不存在此账号可以添加
             User one = new User();
             one.setName(name);
             one.setUser(user);
             one.setPassword(password);
-            int insert = userMapper.insert(one);
+            one.setStuId(stuid);
+            int insert = userMapper.insertSelective(one);
             //影响数据行数不为1则增加失败
-            if (insert != 1)
-                res = false;
-            else res = true;
+            if (insert == 1)
+                return "success";
+            else
+                return "wrong";
         }
-        return res;
     }
 
     @Override
@@ -95,4 +106,52 @@ public class LoginServiceImpl implements LoginService {
         int i = userMapper.updateByUser(one);
         return i;
     }
+
+    @Override
+    public List<User> getAllUser(Integer pageno) {
+        List<User> users = userMapper.selectAll(pageno);
+        return users;
+    }
+
+    @Override
+    public List<User> getAllUserById(String stuid) {
+        List<User> users = userMapper.selectAllById(stuid);
+        return users;
+    }
+
+    @Override
+    public int getCountByStuId(String stuid) {
+        int allCountByID = userMapper.getAllCountByID(stuid);
+        return allCountByID;
+    }
+
+    @Override
+    @Transactional
+    public boolean delUser(Integer id) {
+        int i = userMapper.deleteByPrimaryKey(id);
+        if(i==1)
+            return true;
+        else return false;
+    }
+
+    @Override
+    public List<UserAndBooknum> getAllUserAndNum(Integer pageno) {
+        List<User> users = userMapper.selectAll(pageno);
+        List<UserAndBooknum> list=new ArrayList<>();
+        for(User one:users){
+            if (one.getId()==1)
+                continue;
+            int booknum = borrowMapper.borrowCountByUserID(one.getId());
+            UserAndBooknum obj=new UserAndBooknum();
+            obj.setId(one.getId());
+            obj.setName(one.getName());
+            obj.setUser(one.getUser());
+            obj.setStuId(one.getStuId());
+            obj.setBooknum(booknum);
+            list.add(obj);
+        }
+        return list;
+    }
+
+
 }

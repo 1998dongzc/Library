@@ -1,7 +1,7 @@
 package com.dzc.springboot.controller;
 
 import com.dzc.springboot.model.User;
-import com.dzc.springboot.service.login.LoginService;
+import com.dzc.springboot.service.login.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +21,7 @@ public class UserController {
 
 
     @Autowired
-    private LoginService loginService;
+    private UserService userService;
 
     //跳转学生登录页面
     @RequestMapping("/login")
@@ -62,8 +62,8 @@ public class UserController {
     //学生登录登陆功能
     @RequestMapping("/login/do")
     public String doLogin(HttpServletRequest request, Model model, String user, String password) {
-        boolean res = loginService.isUser(user, password);
-        User currentUser = loginService.getUser(user);
+        boolean res = userService.isUser(user, password);
+        User currentUser = userService.getUser(user);
         if (res) {
             request.getSession().setAttribute("user", currentUser);
             model.addAttribute("user", currentUser);
@@ -77,10 +77,10 @@ public class UserController {
     //管理员登陆功能
     @RequestMapping("/login/root")
     public String doLoginRoot(HttpServletRequest request, Model model, String user, String password) {
-        boolean res = loginService.isRootUser(user, password);
+        boolean res = userService.isRootUser(user, password);
         if (res) {
             //登录成功 将用户添加到session中
-            User currentuser = loginService.getUser(user);
+            User currentuser = userService.getUser(user);
             request.getSession().setAttribute("user", currentuser);
         }
         //登录错误信息
@@ -94,7 +94,7 @@ public class UserController {
     //修改学生账号
     @RequestMapping("/modify/do")
     public String ModifyUserDo(HttpServletRequest request,Model model,String username, String password) {
-        int i = loginService.updateInfor(username, password);
+        int i = userService.updateInfor(username, password);
         User user = (User) request.getSession().getAttribute("user");
         model.addAttribute("user",user);
         if (i>0)

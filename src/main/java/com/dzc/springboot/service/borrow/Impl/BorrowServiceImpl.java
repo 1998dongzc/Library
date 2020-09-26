@@ -117,4 +117,53 @@ public class BorrowServiceImpl implements BorrowService {
         return list;
     }
 
+    public List<MixBorrow> getAllBorrows(Integer pageno) throws ParseException {
+        List<Borrow> borrows = borrowMapper.selectAllBorrow(pageno);
+        List<MixBorrow> list = new ArrayList<>();
+        for (Borrow one : borrows) {
+            MixBorrow t = new MixBorrow();
+            //使borrow中的day天数变成借书时间
+            String day = one.getDate();
+            Integer time = Integer.valueOf(day);
+            String starttime = DateUtil.startDateToStr(one.getReturndate(), time);
+            //将三个bean的信息结合在一个新的bean中
+            //根据borrow的中bookid查出book信息
+            User user = userMapper.selectByPrimaryKey(one.getUserid());
+            //根据borrow的中userid查出User信息
+            Book book = bookMapper.selectByPrimaryKey(one.getBookid());
+            t.setId(one.getId());
+            t.setUname(user.getName());
+            t.setBname(book.getName());
+            t.setBnum(book.getNum());
+            t.setBroom(book.getRoom());
+            //设置归还日期信息
+            t.setRtime(one.getReturndate());
+            //设置借书的日期信息
+            t.setStime(starttime);
+            //根据时间工具类的方法 得到判断是否逾期的信息
+            t.setStatus(DateUtil.isLate(one.getReturndate()));
+            list.add(t);
+        }
+        return list;
+    }
+
+    @Override
+    public Integer getCountBorrow() {
+        int borrowCount = borrowMapper.getBorrowCount();
+        return borrowCount;
+    }
+
+    @Override
+    @Transactional
+    public boolean returnBook(Integer id) {
+        Borrow borrow = borrowMapper.selectByPrimaryKey(id);
+        Book book = bookMapper.selectByPrimaryKey(borrow.getBookid());
+        book.setStatus(book.getStatus() + 1);
+        int bookupdate = bookMapper.updateByPrimaryKeySelective(book);
+        int borrowdelete = borrowMapper.deleteByPrimaryKey(id);
+        if (bookupdate == 1 && borrowdelete == 1)
+            return true;
+        else
+            return false;
+    }
 }

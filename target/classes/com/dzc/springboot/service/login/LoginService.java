@@ -2,6 +2,8 @@ package com.dzc.springboot.service.login;
 
 import com.dzc.springboot.model.User;
 
+import java.util.List;
+
 /**
  * @author: 董政辰
  * @date: 2020/9/7 8:44
@@ -14,7 +16,7 @@ public interface LoginService {
     public boolean isUser(String user,String password);
 
     //添加用户 并返回是否成功的布尔值
-    public boolean addUser(String name, String user, String password);
+    public String addUser(String name, String user, String password,String stuid);
 
     //根据账号获取账号
     public User getUser(String user);
@@ -22,5 +24,15 @@ public interface LoginService {
     //是否存在管理员用户
     public boolean isRootUser(String user, String password);
 
+    //更新用户信息
     public int updateInfor(String user, String password);
+
+    //查询所有学生
+    public List<User> getAllUser(Integer pageno);
+
+    public List<User> getAllUserById(String stuid);
+
+    public int getCountByStuId(String stuid);
+
+    public boolean delUser(Integer id);
 }
