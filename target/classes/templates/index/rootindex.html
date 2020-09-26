@@ -12,9 +12,6 @@
             font-size: 30px;
             color: #FFFFFF;
         }
-        li{
-            width: 20%;
-        }
         ul{
             margin:0;
             padding:0;
@@ -44,11 +41,10 @@
             text-align: center;
             font-size: 40px;
             color: green;
-            width: 60%;
-            height: 200px;
-            margin: 40px auto ;
-            background: #0ef;
+            width: 100%;
+            border: ridge slateblue;
         }
+
     </style>
 
     <script th:src="@{/js/jquery-3.5.1.min.js}"></script>
@@ -58,11 +54,26 @@
             var b=$("#b");
             var c=$("#c");
             var d=$("#d");
+            var e=$("#e");
             var mess=$(".mess")
             a.bind("mouseover",function () {
-                mess.html("分页查询页面<br>可根据书名作者阅览室查询书籍<br>" +
-                    "<img th:src='@{/icon/user.png}'>");
+                mess.html("查找书籍页面&emsp;可以根据作者、书名、阅览室查找");
             });
+            b.bind("mouseover",function () {
+                mess.html("对书籍的增删查改操作");
+            });
+            c.bind("mouseover",function () {
+                mess.html("对学生的增删查改操作");
+            });
+            d.bind("mouseover",function () {
+                mess.html("查看书籍的借记情况");
+            });
+            e.bind("mouseover",function () {
+                mess.html("退出登陆");
+            })
+            $("#a,#b,#c,#d,#e").bind("mouseout",function () {
+                mess.html("&emsp;");
+            })
         })
     </script>
 
@@ -83,27 +94,23 @@
         查询书籍
     </a>
     </li>
-    <li id="b"><a th:href="@{/root/curd}">
+    <li><a  id="b" th:href="@{/root/curd}">
         书籍管理
     </a></li>
-    <li id="c"><a th:href="@{/root/stucurd}">
+    <li><a id="c" th:href="@{/root/stucurd}">
         学生管理
     </a></li>
-    <li id="d"><a th:href="@{/borrow/display/root(pageno=1)}">
+    <li><a id="d" th:href="@{/borrow/display/root(pageno=1)}">
        查看借记记录
     </a></li>
-    <li><a th:href="@{/user/login/out}">
+    <li><a id="e" th:href="@{/user/login/out}">
         退出登录
     </a></li>
 </ul>
 
 <div class="mess">
-12312312
+    &emsp;&emsp;
 </div>
-
-<hr>
-<footer>
-    作者:Dzc董政辰
-</footer>
+<img id="img" th:src="@{/icon/library.png}" width="100%" height="520px">
 </body>
 </html>

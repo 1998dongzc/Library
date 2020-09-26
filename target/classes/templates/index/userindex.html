@@ -3,16 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <title>首页</title>
+
+    <!--样式内容-->
+    <style>
+        .head {
+            text-align: left;
+            background: #2FC2E0;
+            font-size: 30px;
+            color: #FFFFFF;
+        }
+        ul {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        li {
+            text-align: center;
+            display: inline;
+            width: 25%;
+            height: 35px;
+            float: left;
+        }
+        a:link, a:visited {
+            text-decoration: none;
+            height: 100%;
+            display: block;
+            font-weight: bold;
+            color: #FFFFFF;
+            background-color: #3e434e;
+            padding: 4px;
+        }
+        a:hover, a:active {
+            background: #acb3c2;
+            color: black;
+        }
+        .mess{
+            text-align: center;
+            font-size: 40px;
+            color: green;
+            width: 100%;
+            border: ridge slateblue;
+        }
+    </style>
+
+    <!--JS内容-->
+    <script th:src="@{/js/jquery-3.5.1.min.js}"></script>
+    <script th:inline="javascript">
+        $(function () {
+            var a=$("#a");
+            var b=$("#b");
+            var c=$("#c");
+            var d=$("#d");
+            var mess=$(".mess")
+            a.bind("mouseover",function () {
+                mess.html("查找书籍页面&emsp;可以根据作者、书名、阅览室查找");
+            });
+            b.bind("mouseover",function () {
+                mess.html("修改个人账号密码");
+            });
+            c.bind("mouseover",function () {
+                mess.html("查看个人的借书情况");
+            });
+            d.bind("mouseover",function () {
+                mess.html("退出登陆");
+            })
+            $("#a,#b,#c,#d").bind("mouseout",function () {
+                mess.html("&emsp;");
+            })
+        })
+    </script>
+
 </head>
 <body>
 <h1 style="text-align: center">图书馆管理系统</h1>
-<hr>
-姓名: <span th:text="${user.name}">xxx</span> <br>
-学号: <span th:text="${user.stuId}">xxxxxx</span>
-<hr>
-<a th:href="@{/book/querypage}"><button>查询书籍</button></a>
-<a th:href="@{/user/modify}"><button>信息修改</button></a>
-<a th:href="@{/borrow/display}"><button>借书情况</button></a>
-<a th:href="@{/user/login/out}"><button>退出登录</button></a>
+
+<!--用户信息栏-->
+<div class="head">
+    姓名: <span th:text="${user.name}">xxx</span> <br>
+    学号: <span th:text="${user.stuId}">xxxxxx</span>
+</div>
+
+<!--功能栏-->
+<ul>
+    <li>
+        <a id="a" th:href="@{/book/querypage}">查询书籍</a>
+    </li>
+    <li>
+        <a id="b"  th:href="@{/user/modify}">信息修改</a>
+    </li>
+    <li>
+        <a id="c"  th:href="@{/borrow/display}">借书情况</a>
+    </li>
+    <li>
+        <a id="d"  th:href="@{/user/login/out}">退出登录</a>
+    </li>
+</ul>
+
+<!--提示框-->
+<div class="mess">
+    &emsp;
+</div>
+
 </body>
 </html>
