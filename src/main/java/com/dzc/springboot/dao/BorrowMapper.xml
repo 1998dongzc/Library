@@ -109,4 +109,11 @@
   <select id="getBorrowCount" resultType="java.lang.Integer">
     select count(*) from borrow;
   </select>
+
+  <select id="selectBorrowsByBookId" parameterType="java.lang.Integer" resultType="com.dzc.springboot.model.Borrow">
+    select
+    <include refid="Base_Column_List"/>
+    from borrow
+    where bookid=#{id}
+  </select>
 </mapper>

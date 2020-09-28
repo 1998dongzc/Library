@@ -25,4 +25,6 @@ public interface BorrowMapper {
     List<Borrow> selectAllBorrow(@Param("pageno") Integer pageno);
 
     int getBorrowCount();
+
+    List<Borrow> selectBorrowsByBookId(@Param("id") Integer id);
 }

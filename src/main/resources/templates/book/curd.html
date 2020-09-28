@@ -3,13 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link th:href="@{/js/menu.css}" type="text/css" rel="stylesheet">
+    <style>
+        li{
+            width: 33.1%;
+            border: 1px solid;
+        }
+        .head {
+            width: 100%;
+            height: 80px;
+            background: #094e61;
+            color: white;
+            text-align: center;
+            font-size: 60px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
-<body style="height: 100%">
-<a th:href="@{/book/curd/create}" target="frame"><button>增加书籍</button></a>
-<a th:href="@{/book/curd/delete}" target="frame"><button>删除|修改</button></a>
-<a th:href="@{/root/index}"><button>返回首页</button></a>
-<hr>
-<iframe name="frame" width="100%" height="650px">
+<body style="height: 100%" >
+<div class="head">书籍管理页面</div>
+
+<!--菜单按钮-->
+<ul>
+    <li>
+        <a th:href="@{/book/curd/create}" target="frame">增加书籍</a>
+    </li>
+    <li>
+    <a th:href="@{/book/curd/delete}" target="frame">删除|修改</a>
+    </li>
+    <li><a th:href="@{/root/index}">
+        返回首页
+    </a></li>
+</ul>
+
+<!--框架-->
+<iframe name="frame" width="100%" height="580px">
 
 </iframe>
 </body>

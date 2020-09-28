@@ -3,9 +3,20 @@
 <head>
 	<meta charset="UTF-8">
 	<title>增加图书</title>
+	<style>
+		.head {
+			width: 100%;
+			height: 80px;
+			background: #160e69;
+			color: white;
+			text-align: center;
+			font-size: 40px;
+			margin: 0 auto;
+		}
+	</style>
 </head>
 <body>
-<h1>增加一个图书</h1>
+<div class="head">增加一个图书</div>
 <form action="/books/add/do" method="post">
 	<p>书名： <input type="text" name="name" /></p>
 	<p>作者： <input type="text" name="author" /></p>

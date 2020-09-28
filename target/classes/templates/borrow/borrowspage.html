@@ -3,19 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>个人借记情况</title>
+    <link rel="stylesheet" th:href="@{/js/table.css}" type="text/css">
+    <style>
+        .head {
+            width: 100%;
+            height: 80px;
+            background: #3e434e;
+            color: white;
+            text-align: center;
+            font-size: 60px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
-<div align="center">
-    <h2>个人借书情况</h2>
-    <hr>
+<div class="head">个人借书情况</div>
+<div align="center" style="font-size: 23px">
     <table border="1" cellpadding="10" style="text-align: center">
         <tr>
-            <th width="200px">书名</th>
-            <th width="80px">阅览室</th>
-            <th width="80px">编号</th>
-            <th width="150px">借书日期</th>
-            <th width="150px">归还日期</th>
-            <th width="80px">状态</th>
+            <th width="250px">书名</th>
+            <th width="110px">阅览室</th>
+            <th width="110px">编号</th>
+            <th width="190px">借书日期</th>
+            <th width="190px">归还日期</th>
+            <th width="110px">状态</th>
         </tr>
         <tr th:each="one:${list}">
             <td th:text="'《'+${one.bname}+'》'"></td>
@@ -27,9 +38,9 @@
         </tr>
     </table>
     <br>
-    <span style="color:#0e4;font-size: 30px">Tip:还书请到管理员窗口归还</span>
+    <span style="color:#0e4;font-size: 36px">Tip:还书请到管理员窗口归还</span>
     <br>
-    <a th:href="@{/user/index/stu}"><button>返回首页</button></a>
+    <a th:href="@{/user/index/stu}"><button style="font-size: 30px">返回首页</button></a>
 </div>
 </body>
 </html>

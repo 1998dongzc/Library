@@ -1,20 +1,122 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8">
-	<title>用户登录</title>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+    <!--样式设置-->
+    <style>
+        .head {
+            width: 100%;
+            height: 80px;
+            background: #3e434e;
+            color: white;
+            text-align: center;
+            font-size: 60px;
+            margin: 0 auto;
+        }
+
+        .login {
+            border-style: outset;
+            border-color: #566177 #42464e;
+            border-width: 10px;
+            border-radius: 8%;
+            margin: 0 auto;
+            text-align: center;
+            width: 40%;
+            height: 400px;
+            font-size: 30px;
+            background-image: url("");
+        }
+        .div {
+            color: red;
+            height: 25px;
+            font-size: 25px;
+            display: initial;
+        }
+        .userlogin{
+            color: #0ef;
+            background: #7383bb;
+            font-size: 45px;
+            text-align: center;
+        }
+        input{
+            font-size: 25px;
+        }
+/*        .text{
+            border-radius: 15px;
+            border-style: none;
+        }*/
+    </style>
+
+    <script th:src="@{/js/jquery-3.5.1.min.js}"></script>
+    <script>
+        $(function () {
+            $("#name,#pswd").blur(function () {
+                if($("#name").val()=="") {
+                    $("#submit").attr("disabled", true)
+                    $("#tip").text("账号不允许为空");
+                }else {
+                    $("#submit").attr("disabled", false)
+                    $("#tip").html("&emsp;");
+                }
+            })
+        })
+    </script>
+
 </head>
 <body>
-<h1 style="text-align: center">图书管理系统</h1>
-<hr>
-<h2 style="text-align: center">学生登录</h2>
-<hr>
-<form action="/user/login/do" method="post">
-	<p>账号： <input type="text" name="user" /></p>
-	<p>密码： <input type="password" name="password" /></p>
-	<input type="submit" value="登陆" />
-</form>
-<a th:href="@{/user/rootlogin}"><button>管理员</button></a>
-<span th:text="${mess}">111</span>
+<!--两个标题-->
+<div class="head">
+    图书馆管理系统
+</div>
+<div class="userlogin">
+    学生登录
+</div>
+
+<!--登录表单框-->
+<div>
+    <div class="login">
+        <br>
+        <img width="85px" height="85px" th:src="@{/icon/head.png}">
+        <table align="center">
+            <form action="/user/login/do" method="post">
+                <tr>
+                    <td></td>
+                    <td><input id="name" class="text" type="text" name="user" placeholder=" 账号"/></td>
+                </tr>
+                <tr><td colspan="2">
+                    <div class="div">
+                        <span id="tip">&emsp;</span>
+                    </div>
+                </td></tr>
+                <tr>
+                    <td></td>
+                    <td><input id="pswd" class="text" type="password" placeholder=" 密码" name="password"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="div" >
+                            <span th:text="${mess}" >&emsp;</span>
+                            &emsp;
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" id="submit" style="font-size: 20px" value="登陆"/>
+            </form>&emsp;
+            <a th:href="@{/user/rootlogin}">
+                <button style="font-size: 20px">管理员</button>
+            </a>
+            </td>
+            </tr>
+        </table>
+        </tr>
+        </table>
+
+    </div>
+</div>
+
+
 </body>
 </html>

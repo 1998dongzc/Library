@@ -3,33 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script th:src="@{/js/jquery-3.5.1.min.js}">
-
-    </script>
-    <script>
-
-    </script>
+    <link rel="stylesheet" th:href="@{/js/table.css}" type="text/css">
     <style>
         a {
             text-decoration: none;
         }
+
+        .head {
+            width: 100%;
+            height: 80px;
+            background: #3e434e;
+            color: white;
+            text-align: center;
+            font-size: 60px;
+            margin: 0 auto;
+        }
+        .end{
+            width: 100%;
+            bottom: 30px;
+            position: absolute;
+            text-align: center;
+            height: 30px;
+        }
     </style>
 </head>
 <body>
+<div class="head">查询结果如下</div>
+
 <div align="center">
-    <h2>查询结果如下</h2>
-    <a th:href="@{/book/querypage}"><button>重新查询</button></a>&emsp;
-    <a th:href="@{/user/index/stu}"><button>返回首页</button></a>
-    <hr>
+    <a th:href="@{/book/querypage}">
+        <button style="font-size: 25px">重新查询</button>
+    </a>&emsp;
+
+    <!--判断session用户的身份来返回首页页面-->
+    <span th:if="${#session.getAttribute('user').user eq 'root'}"><a th:href="@{/root/index}">
+        <button style="font-size: 25px">返回首页</button></a>
+    </span>
+    <span th:unless="${#session.getAttribute('user').user eq 'root'}"><a th:href="@{/user/index/stu}">
+        <button style="font-size: 25px">返回首页</button></a>
+    </span>
+
+    <br><br>
     <table id="list" border="1" cellpadding="10" style="text-align: center">
         <tr>
-            <th>ID</th>
-            <th width="250px">书名</th>
-            <th width="50px">作者</th>
-            <th width="50px">价格</th>
-            <th width="60px">数量</th>
-            <th width="80px">阅读室</th>
-            <th width="80px">编号</th>
+            <th width="50px">ID</th>
+            <th width="300px">书名</th>
+            <th width="90px">作者</th>
+            <th width="80px">价格</th>
+            <th width="80px">数量</th>
+            <th width="90px">阅读室</th>
+            <th width="90px">编号</th>
             <th>操作</th>
         </tr>
         <tr th:each="book:${list}">
@@ -40,7 +63,7 @@
 
             <td th:if="${book.status>=1}">
                 <span th:text="${book.status}"></span>
-            </td>0
+            </td>
             <td th:if="${book.status < 1}">
                 <span th:text="暂无"></span>
             </td>
@@ -49,8 +72,7 @@
             <td th:text="${book.num}"></td>
 
             <td th:if="${book.status>0}">
-                <a th:href="@{/book/borrow(id=${book.id
-                })}">
+                <a th:href="@{/book/borrow(id=${book.id})}">
                     <button th:disabled="false">借书</button>
                 </a>
             </td>
@@ -62,35 +84,37 @@
         </tr>
     </table>
     <span th:text="${mess}"></span>
-    <hr>
-    <!--显示当前页面数 和共页面数-->
-    <span th:text="'共'+${count}+'页'"></span>
-    &emsp;
-    <span th:text="'当前第'+${pageno}+'页'"></span>&emsp;
+    <div class="end">
+        <hr>
+        <!--显示当前页面数 和共页面数-->
+        <span th:text="'共'+${count}+'页'"></span>
+        &emsp;
+        <span th:text="'当前第'+${pageno}+'页'"></span>&emsp;
 
-    <!--跳转到第一页 则参数为1-->
-    <a th:href="@{/book/query/do(pageno=1,bookname=${bookname},bookauthor=${bookauthor},bookroom=${bookroom})}">
-        <button>首页</button>
-    </a>&emsp;
+        <!--跳转到第一页 则参数为1-->
+        <a th:href="@{/book/query/do(pageno=1,bookname=${bookname},bookauthor=${bookauthor},bookroom=${bookroom})}">
+            <button>首页</button>
+        </a>&emsp;
 
-    <a th:href="@{/book/query/do(pageno=${pageno}-1,bookname=${bookname},bookauthor=${bookauthor},bookroom=${bookroom})}">
-        <!--如果当前页码为1则 则没有上一页 无法点击上一页-->
-        <button th:disabled="${pageno eq 1?'true':'false'}">
-            上一页
-        </button>
-    </a>&emsp;
+        <a th:href="@{/book/query/do(pageno=${pageno}-1,bookname=${bookname},bookauthor=${bookauthor},bookroom=${bookroom})}">
+            <!--如果当前页码为1则 则没有上一页 无法点击上一页-->
+            <button th:disabled="${pageno eq 1?'true':'false'}">
+                上一页
+            </button>
+        </a>&emsp;
 
-    <a th:href="@{/book/query/do(pageno=${pageno}+1,bookname=${bookname},bookauthor=${bookauthor},bookroom=${bookroom})}">
-        <!--如果当前页码为尾页（count）时则 则没有下一页 无法点击下一页-->
-        <button th:disabled="${pageno eq count?'true':'false'}">
-            下一页
-        </button>
-    </a>&emsp;
+        <a th:href="@{/book/query/do(pageno=${pageno}+1,bookname=${bookname},bookauthor=${bookauthor},bookroom=${bookroom})}">
+            <!--如果当前页码为尾页（count）时则 则没有下一页 无法点击下一页-->
+            <button th:disabled="${pageno eq count?'true':'false'}">
+                下一页
+            </button>
+        </a>&emsp;
 
-    <!--跳转到最后一个数 则参数为count-->
-    <a th:href="@{/book/query/do(pageno=${count},bookname=${bookname},bookauthor=${bookauthor},bookroom=${bookroom})}">
-        <button>末页</button>
-    </a>
+        <!--跳转到最后一个数 则参数为count-->
+        <a th:href="@{/book/query/do(pageno=${count},bookname=${bookname},bookauthor=${bookauthor},bookroom=${bookroom})}">
+            <button>末页</button>
+        </a>
+    </div>
 </div>
 </body>
 </html>

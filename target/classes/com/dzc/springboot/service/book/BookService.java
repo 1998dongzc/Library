@@ -25,7 +25,7 @@ public interface BookService {
 
     List<Book> getSomeBooks(String bookname,String bookauthor,String bookroom);
 
-    boolean doDeleteById(Integer id);
+    String  doDeleteById(Integer id);
 
     Book seletOneBookById(Integer id);
 

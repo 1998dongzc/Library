@@ -1,6 +1,7 @@
 package com.dzc.springboot.controller;
 
 import com.dzc.springboot.model.Book;
+import com.dzc.springboot.model.Borrow;
 import com.dzc.springboot.model.User;
 import com.dzc.springboot.service.book.BookService;
 import com.dzc.springboot.service.borrow.BorrowService;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import sun.security.util.math.IntegerModuloP;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.*;
 import java.util.List;
 
 /**
@@ -133,8 +135,13 @@ public class BookController {
     //执行删除书籍操作
     @RequestMapping("/delete/do")
     public String doDelete(Integer id, Model model) {
-        boolean b = service.doDeleteById(id);
-        model.addAttribute("res", b);
+        String res = service.doDeleteById(id);
+        if (res.equals("right"))
+            model.addAttribute("mess", "删除成功");
+        else if (res.equals("wrong"))
+            model.addAttribute("mess", "删除失败");
+        else if(res.equals("borrow"))
+            model.addAttribute("mess","删除失败,该书籍还在借记中");     
         return "/book/curdhtml/delete";
     }
 
@@ -165,7 +172,7 @@ public class BookController {
     //执行借书操作
     @RequestMapping("/borrow/do")
     public String doBorrow(Integer id, HttpServletRequest request, Model model,
-                         Integer date, String password) {
+                           Integer date, String password) {
         User user = (User) request.getSession().getAttribute("user");
         String res = borrowService.borrowOneBook(user, id, date, password);
         //为thymeleaf设置三个默认空值
@@ -173,15 +180,15 @@ public class BookController {
         model.addAttribute("pswd", "");
         model.addAttribute("book", service.seletOneBookById(id));
         if (res.equals("ok")) {
-            model.addAttribute("mess", "借书成功:请在"+ DateUtil.nowDateToStr(date)+"当天或之前归还 逾期请联系管理员");
-        } else if (res.equals("worng")){
+            model.addAttribute("mess", "借书成功:请在" + DateUtil.nowDateToStr(date) + "当天或之前归还 逾期请联系管理员");
+        } else if (res.equals("worng")) {
             model.addAttribute("mess", "借书失败:发生了预期外错误 请联系管理员");
-        } else if(res.equals("pswd")) {
+        } else if (res.equals("pswd")) {
             model.addAttribute("pswd", "借书失败:账号或密码错误");
-        }else if(res.equals("booknum")){
-            model.addAttribute("mess","借书失败:书籍库存暂时不足");
-        }else if(res.equals("count")){
-            model.addAttribute("mess","借书失败:已达到最大可借书数目 请先归还其他书后");
+        } else if (res.equals("booknum")) {
+            model.addAttribute("mess", "借书失败:书籍库存暂时不足");
+        } else if (res.equals("count")) {
+            model.addAttribute("mess", "借书失败:已达到最大可借书数目 请先归还其他书后");
         }
 
         return "/book/borrowbook";

@@ -166,4 +166,10 @@ public class BorrowServiceImpl implements BorrowService {
         else
             return false;
     }
+
+    @Override
+    public List<Borrow> getBorrows(Integer id) {
+        List<Borrow> borrows = borrowMapper.selectBorrowsByBookId(id);
+        return borrows;
+    }
 }

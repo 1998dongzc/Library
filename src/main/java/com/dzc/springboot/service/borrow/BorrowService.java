@@ -24,4 +24,8 @@ public interface BorrowService {
     Integer getCountBorrow();
 
     boolean returnBook(Integer id);
+
+    List<Borrow> getBorrows(Integer id);
+
+
 }

@@ -4,6 +4,7 @@ import com.dzc.springboot.dao.BookMapper;
 import com.dzc.springboot.dao.BorrowMapper;
 import com.dzc.springboot.dao.UserMapper;
 import com.dzc.springboot.model.Book;
+import com.dzc.springboot.model.Borrow;
 import com.dzc.springboot.model.User;
 import com.dzc.springboot.service.book.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,12 +86,16 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional
-    public boolean doDeleteById(Integer id) {
-        int i = mapper.deleteByPrimaryKey(id);
-        if (i == 1)
-            return true;
-        else
-            return false;
+    public String doDeleteById(Integer id) {
+        List<Borrow> borrows = borrowMapper.selectBorrowsByBookId(id);
+        if (borrows.isEmpty()) {
+            int i = mapper.deleteByPrimaryKey(id);
+            if (i == 1)
+                return "right";
+            else
+                return "wrong";
+        }else
+            return "borrow";
     }
 
     @Override
