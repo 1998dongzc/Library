@@ -6,4 +6,8 @@ public class yj_test {
     public yj_test(String name) {
         name=name;
     }
+
+    public String getName() {
+        return name;
+    }
 }
